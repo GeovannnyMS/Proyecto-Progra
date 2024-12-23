@@ -22,7 +22,8 @@ int contador_estudiaes = 0;
 int contador_Cursos = 0;
 
 string dias[Max_Cursos];
-string Horas[Max_Cursos][Max_Cursos];
+string HorasEntrada[Max_Cursos];
+string HorasSalida[Max_Cursos];
 string Aunla[Max_Cursos];
 
 
@@ -92,6 +93,12 @@ void RegistroHorarios() {
 		cout << "invalid course\n";
 		return;
 	}
+	cout << "enter the day: ";
+	cin >> dias[aux];
+	cout << "\nenter the time: ";
+	cin >> HorasEntrada[aux];
+	cout << "\nenter departure time: ";
+	cin >> HorasSalida[aux];
 
 
 }
