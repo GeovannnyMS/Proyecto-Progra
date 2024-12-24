@@ -12,19 +12,23 @@ string NombreProfe[Max_Cursos];
 string PimerApellidoProfe[Max_Cursos];
 string SegundoApellidoProfe[Max_Cursos];
 
-char Cedulas[Estudiantes][50];
-char Carrera[Estudiantes][50];
-char nombresCursos[Max_Cursos][50];
-char NCR[Max_Cursos][20];
-char Creditos[Max_Cursos];
-
-int contador_estudiaes = 0;
-int contador_Cursos = 0;
-
 string dias[Max_Cursos];
 string HorasEntrada[Max_Cursos];
 string HorasSalida[Max_Cursos];
 string Aunla[Max_Cursos];
+string matricula[Max_Cursos];
+
+char Cedulas[Estudiantes][50];
+char Carrera[Estudiantes][50];
+char nombresCursos[Max_Cursos][50];
+char NCR[Max_Cursos][20];
+
+
+int Creditos[Max_Cursos];
+int contador_estudiaes = 0;
+int contador_Cursos = 0;
+int contadorHorarios = 0;
+int contadorMatricula[Max_Cursos] = {0};
 
 
 void RegistroEsrudiantes() {
@@ -99,7 +103,10 @@ void RegistroHorarios() {
 	cin >> HorasEntrada[aux];
 	cout << "\nenter departure time: ";
 	cin >> HorasSalida[aux];
-
+	cout << "\nenter the classroom: ";
+	cin >> Aunla[aux];
+	cout << endl;
+	cout << "recorded time\n";
 
 }
 
@@ -126,6 +133,52 @@ void SubmenuMatenimiento() {
 	} while (submenu != 4);
 }
 
+void Matricular() {
+	int eleccion = 0;
+	int seleccion = 0;
+	if (contador_estudiaes == 0 || contador_Cursos == 0) {
+		cout << "no students or courses registered\n";
+		return;
+	}
+	cout << "\nregistered students\n";
+
+	for (int i = 0; i < contador_estudiaes; i++) {
+		cout << i + 1 << " = " << Cedulas[i] << " || " << Nombres_estudiante[i] << "  " << Primer_apellido_estudiante[i] << "  " << Segundo_apellido_estudiante[i] << " " << Carrera[i] << endl;
+	}
+	cout << "Which student would you like to enroll?: ";
+	cout << endl;
+	cin >> eleccion;
+	eleccion--;
+	if (eleccion < 0 || eleccion >= contador_estudiaes) {
+		cout << "invalid student\n";
+		return;
+	}
+
+
+	cout << "What course are you going to enroll in?\n";
+	for (int i = 0; i < contador_Cursos; i++) {
+		cout << "course " << i+1 << " || " << NCR[i] << " || " << nombresCursos[i] << endl;
+	}
+	cin >> seleccion;
+	seleccion--;
+	
+	if (seleccion < 0 || seleccion >= contador_Cursos) {
+		cout << "invalid course\n";
+		return;
+	}
+
+	if (contadorMatricula[eleccion] < Max_Cursos) {
+		int matriculacion = contadorMatricula[eleccion];
+		contadorMatricula[eleccion]++;
+		cout << "successfully enrolled\n";
+
+	}
+	else {
+		cout << "the student already has many courses enrolled\n";
+	}
+	
+	
+}
 int main()
 {
 	char menu;
@@ -157,6 +210,7 @@ int main()
 			break;
 
 		case 'C':
+			Matricular();
 			break;
 
 		case 'D':
