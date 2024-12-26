@@ -17,9 +17,9 @@ string HorasEntrada[Max_Cursos];
 string HorasSalida[Max_Cursos];
 string Aunla[Max_Cursos];
 string matricula[Max_Cursos];
+string Carrera[Estudiantes];
 
 char Cedulas[Estudiantes][50];
-char Carrera[Estudiantes][50];
 char nombresCursos[Max_Cursos][50];
 char NCR[Max_Cursos][20];
 
@@ -32,6 +32,7 @@ int contadorMatricula[Max_Cursos] = {0};
 
 
 void RegistroEsrudiantes() {
+	int seleccion  = 0 ;
 	if (contador_estudiaes >= Estudiantes) {
 		cout << "\nSorry we can't rewrite it at this time\n";
 		return;
@@ -48,8 +49,26 @@ void RegistroEsrudiantes() {
 	cout << "\nEnter your ID: ";
 	cin >> Cedulas[contador_estudiaes];
 
-	cout << "\nEnter your career with the following format\n(Example: ingenieria_en_sistemas_de_informacion): ";
-	cin >> Carrera[contador_estudiaes];
+	cout << "\nchoose the career\n";
+	cout << "1 = Systems engineering\n2 = English learning\n3 = topography\n4 = administration\nenter the number: ";
+	cin >> seleccion;
+	switch (seleccion)
+	{
+	case 1:
+		Carrera[contador_estudiaes] = "Systems engineering";
+		break;
+	case 2:
+		Carrera[contador_estudiaes] = "English learning";
+		break;
+	case 3:
+		Carrera[contador_estudiaes] = "topography";
+		break;
+	case 4:
+		Carrera[contador_estudiaes] = "administration";
+		break;
+	}
+	
+
 	cout << endl;
 	contador_estudiaes++;
 	cout << "Registered student\n\n";
@@ -179,6 +198,48 @@ void Matricular() {
 	
 	
 }
+
+void VerEstudiantes() {
+
+	if (contador_estudiaes < 0) {
+		cout << "there are no registered students\n";
+		return;
+	}
+	cout << "enrolled students\n";
+	for (int i = 0; i < contador_estudiaes; i++) {
+		cout <<  "registered courses " << i + 1 << " = " << Cedulas[i] << " || " << Nombres_estudiante[i] << " " << Primer_apellido_estudiante[i] << " " << Segundo_apellido_estudiante[i] << " || " << Carrera[i] << endl;
+	}
+
+}
+void VerCursos() {
+	if (contador_Cursos == 0) {
+		cout << "there are no registered courses\n";
+		return;
+	}
+	cout << "registered courses\n";
+	for (int i = 0; i < contador_Cursos; i++) {
+		cout << "course " << i + 1 << NCR[i] << " || " << Creditos[i] << " || " << nombresCursos[i] << endl;
+	}
+}
+
+void consulta() {
+	int menu = 0;
+	do
+	{
+		cout << "what you want to consult\n1 = students\n2 = courses\n3 = back\n";
+		cin >> menu;
+		switch (menu)
+		{
+		case 1:
+			VerEstudiantes();
+			break;
+			
+		case 2:
+			VerCursos();
+		}
+
+	} while (menu != 3);
+}
 int main()
 {
 	char menu;
@@ -214,9 +275,10 @@ int main()
 			break;
 
 		case 'D':
+
+			consulta();
+
 			break;
-
-
 		}
 	} while (menu != 'E');
 	cout << "Thank you for using the UNA registration systems";
