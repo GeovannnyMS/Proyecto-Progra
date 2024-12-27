@@ -13,22 +13,22 @@ string PimerApellidoProfe[Max_Cursos];
 string SegundoApellidoProfe[Max_Cursos];
 
 string dias[Max_Cursos];
-string HorasEntrada[Max_Cursos];
-string HorasSalida[Max_Cursos];
 string Aunla[Max_Cursos];
-string matricula[Max_Cursos];
 string Carrera[Estudiantes];
+string Cedulas[Estudiantes];
+string nombresCursos[Max_Cursos];
+string matricula[Max_Cursos][Max_Cursos];
 
-char Cedulas[Estudiantes][50];
-char nombresCursos[Max_Cursos][50];
 char NCR[Max_Cursos][20];
 
-
+int HorasEntrada[Max_Cursos];
+int HorasSalida[Max_Cursos];
 int Creditos[Max_Cursos];
 int contador_estudiaes = 0;
 int contador_Cursos = 0;
 int contadorHorarios = 0;
-int contadorMatricula[Max_Cursos] = {0};
+int costoCreditos [Max_Cursos];
+int total[Max_Cursos];
 
 
 void RegistroEsrudiantes() {
@@ -48,6 +48,15 @@ void RegistroEsrudiantes() {
 
 	cout << "\nEnter your ID: ";
 	cin >> Cedulas[contador_estudiaes];
+
+	for (int i = 0; i < contador_estudiaes; i++) {
+			if (Cedulas[i] == Cedulas[i + 1]) {
+				cout << "This student is already registered\n";
+				return;
+			}
+
+		
+	}
 
 	cout << "\nchoose the career\n";
 	cout << "1 = Systems engineering\n2 = English learning\n3 = topography\n4 = administration\nenter the number: ";
@@ -81,12 +90,14 @@ void RegistroCursos() {
 		return;
 	}
 
-		cout << "Enter the name of the course with the following format\n(Example: Ingenieria_En_Sistemas_De_Informacion): ";
+		cout << "Enter the name of the course with the following format\n(Example: Matematica_Para_informatica): ";
 		cin >> nombresCursos[contador_Cursos];
 		cout << "\nenter the NCR of the course: ";
 		cin >> NCR[contador_Cursos];
 		cout << "\nenter course credits: ";
 		cin >> Creditos[contador_Cursos];
+		cout << "\nenter the classroom: ";
+		cin >> Aunla[contador_Cursos];
 		cout << "\nEnter the teacher's name: ";
 		cin >> NombreProfe[contador_Cursos];
 		cout << "\nenter the teacher's first last name: ";
@@ -94,9 +105,13 @@ void RegistroCursos() {
 		cout << "\nEnter the teacher's second las name: ";
 		cin >> SegundoApellidoProfe[contador_Cursos];
 
+		costoCreditos[contador_Cursos] = Creditos[contador_Cursos] * 1000;
+
+
 		contador_Cursos++;
 		cout << endl;
 		cout << "added course\n";
+
 }
 
 void RegistroHorarios() {
@@ -120,8 +135,16 @@ void RegistroHorarios() {
 	cin >> dias[aux];
 	cout << "\nenter the time: ";
 	cin >> HorasEntrada[aux];
+	if (HorasEntrada[aux] > 12) {
+		cout << "that time does not exist\n";
+		return;
+	}
 	cout << "\nenter departure time: ";
 	cin >> HorasSalida[aux];
+	if (HorasSalida[aux] > 60) {
+		cout << "that time does not exist\n";
+		return;
+	}
 	cout << "\nenter the classroom: ";
 	cin >> Aunla[aux];
 	cout << endl;
@@ -153,8 +176,11 @@ void SubmenuMatenimiento() {
 }
 
 void Matricular() {
-	int eleccion = 0;
+	int eleccionE = 0;
 	int seleccion = 0;
+	int menu = 0;
+	int contador = 0;
+	
 	if (contador_estudiaes == 0 || contador_Cursos == 0) {
 		cout << "no students or courses registered\n";
 		return;
@@ -164,39 +190,45 @@ void Matricular() {
 	for (int i = 0; i < contador_estudiaes; i++) {
 		cout << i + 1 << " = " << Cedulas[i] << " || " << Nombres_estudiante[i] << "  " << Primer_apellido_estudiante[i] << "  " << Segundo_apellido_estudiante[i] << " " << Carrera[i] << endl;
 	}
-	cout << "Which student would you like to enroll?: ";
+	cout << "\nWhich student would you like to enroll?: ";
+	cin >> eleccionE;
 	cout << endl;
-	cin >> eleccion;
-	eleccion--;
-	if (eleccion < 0 || eleccion >= contador_estudiaes) {
+	eleccionE--;
+	if (eleccionE < 0 || eleccionE >= contador_estudiaes) {
 		cout << "invalid student\n";
 		return;
 	}
-
-
-	cout << "What course are you going to enroll in?\n";
-	for (int i = 0; i < contador_Cursos; i++) {
-		cout << "course " << i+1 << " || " << NCR[i] << " || " << nombresCursos[i] << endl;
-	}
-	cin >> seleccion;
-	seleccion--;
+	do
+	{
 	
-	if (seleccion < 0 || seleccion >= contador_Cursos) {
-		cout << "invalid course\n";
-		return;
-	}
 
-	if (contadorMatricula[eleccion] < Max_Cursos) {
-		int matriculacion = contadorMatricula[eleccion];
-		contadorMatricula[eleccion]++;
-		cout << "successfully enrolled\n";
+		cout << "What course are you going to enroll in?\n";
+		for (int i = 0; i < contador_Cursos; i++) {
+			cout << "course " << i + 1 << " || " << NCR[i] << " || " << nombresCursos[i] << endl;
+		}
+		cout << "\nWhich course do you want to select?: ";
+		cin >> seleccion;
+		cout << endl;
+		seleccion--;
 
-	}
-	else {
-		cout << "the student already has many courses enrolled\n";
-	}
-	
-	
+		for (int i = 0; i < contador_Cursos; i++) {
+			if (nombresCursos[seleccion] == matricula[eleccionE][i]) {
+
+				cout << "This course is already registered\n";
+				return;
+			}
+		
+		}
+		matricula[eleccionE][contador] = nombresCursos[seleccion];
+		contador++;
+		total[eleccionE] += costoCreditos[seleccion];
+
+		cout << "Do you want to enroll in more courses?\n1 = Yes\n0 = No\n";
+		cin >> menu;
+		
+	} while (menu != 0 );
+
+	cout << "the student has to pay " << total[eleccionE] << " based on the number of credits enrolled\n\n";
 }
 
 void VerEstudiantes() {
