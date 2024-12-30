@@ -288,6 +288,7 @@ void consulta() {
 }
 int main()
 {
+
 	char menu;
 	int submenu = 0;
 
