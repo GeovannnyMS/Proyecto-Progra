@@ -19,7 +19,7 @@ string Cedulas[Estudiantes];
 string nombresCursos[Max_Cursos];
 string matricula[Max_Cursos][Max_Cursos];
 
-char NCR[Max_Cursos][20];
+string NCR[Max_Cursos];
 
 int HorasEntrada[Max_Cursos];
 int HorasSalida[Max_Cursos];
@@ -29,6 +29,8 @@ int contador_Cursos = 0;
 int contadorHorarios = 0;
 int costoCreditos [Max_Cursos];
 int total[Max_Cursos];
+
+int ContadorMatricula[Max_Cursos];
 
 
 void RegistroEsrudiantes() {
@@ -179,7 +181,6 @@ void Matricular() {
 	int eleccionE = 0;
 	int seleccion = 0;
 	int menu = 0;
-	int contador = 0;
 	
 	if (contador_estudiaes == 0 || contador_Cursos == 0) {
 		cout << "no students or courses registered\n";
@@ -194,10 +195,12 @@ void Matricular() {
 	cin >> eleccionE;
 	cout << endl;
 	eleccionE--;
+
 	if (eleccionE < 0 || eleccionE >= contador_estudiaes) {
 		cout << "invalid student\n";
 		return;
 	}
+	ContadorMatricula[eleccionE] = 0;
 	do
 	{
 	
@@ -219,8 +222,8 @@ void Matricular() {
 			}
 		
 		}
-		matricula[eleccionE][contador] = nombresCursos[seleccion];
-		contador++;
+		matricula[eleccionE][ContadorMatricula[eleccionE]] = nombresCursos[seleccion];
+		ContadorMatricula[eleccionE]++;
 		total[eleccionE] += costoCreditos[seleccion];
 
 		cout << "Do you want to enroll in more courses?\n1 = Yes\n0 = No\n";
@@ -239,7 +242,18 @@ void VerEstudiantes() {
 	}
 	cout << "enrolled students\n";
 	for (int i = 0; i < contador_estudiaes; i++) {
-		cout <<  "registered courses " << i + 1 << " = " << Cedulas[i] << " || " << Nombres_estudiante[i] << " " << Primer_apellido_estudiante[i] << " " << Segundo_apellido_estudiante[i] << " || " << Carrera[i] << endl;
+		cout << Cedulas[i] << " || " << Nombres_estudiante[i] << " " << Primer_apellido_estudiante[i] << " " << Segundo_apellido_estudiante[i] << " || " << Carrera[i] << endl;
+
+		cout << "\nenrolled courses\n\n";
+
+		if (ContadorMatricula[i] == 0) {
+			cout << "This student has not enrolled in any course\n";
+			return;
+		}
+		for (int x = 0; x < contador_Cursos; x++) {
+			cout <<NCR[i] << " || " << Creditos[i] << " || " << matricula[i][x] << endl;
+		}
+		cout << "=================================================================\n";
 	}
 
 }
@@ -250,7 +264,7 @@ void VerCursos() {
 	}
 	cout << "registered courses\n";
 	for (int i = 0; i < contador_Cursos; i++) {
-		cout << "course " << i + 1 << NCR[i] << " || " << Creditos[i] << " || " << nombresCursos[i] << endl;
+		cout << "course  " << i + 1 << " || " << NCR[i] << " || " << Creditos[i] << " || " << nombresCursos[i] << endl;
 	}
 }
 
@@ -276,6 +290,8 @@ int main()
 {
 	char menu;
 	int submenu = 0;
+
+
 	do
 	{
 		cout << "Welcome to the UNA registration platform\nA = Archive\nB = Maintenance\nC = Tuition\nD = Consultation\nE = Exit\n";
