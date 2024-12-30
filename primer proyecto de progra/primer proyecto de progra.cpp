@@ -24,6 +24,7 @@ string NCR[Max_Cursos];
 int HorasEntrada[Max_Cursos];
 int HorasSalida[Max_Cursos];
 int Creditos[Max_Cursos];
+int nivel [Estudiantes];
 int contador_estudiaes = 0;
 int contador_Cursos = 0;
 int contadorHorarios = 0;
@@ -78,7 +79,8 @@ void RegistroEsrudiantes() {
 		Carrera[contador_estudiaes] = "administration";
 		break;
 	}
-	
+	cout << "\nWhat level of the career are you in in numerical format?: ";
+	cin >> nivel[contador_estudiaes];
 
 	cout << endl;
 	contador_estudiaes++;
@@ -242,7 +244,7 @@ void VerEstudiantes() {
 	}
 	cout << "enrolled students\n";
 	for (int i = 0; i < contador_estudiaes; i++) {
-		cout << Cedulas[i] << " || " << Nombres_estudiante[i] << " " << Primer_apellido_estudiante[i] << " " << Segundo_apellido_estudiante[i] << " || " << Carrera[i] << endl;
+		cout << Cedulas[i] << " || " << Nombres_estudiante[i] << " " << Primer_apellido_estudiante[i] << " " << Segundo_apellido_estudiante[i] << " || " << Carrera[i] << " || level: " << nivel[i] << endl;
 
 		cout << "\nenrolled courses\n\n";
 
