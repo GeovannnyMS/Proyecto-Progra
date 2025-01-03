@@ -21,8 +21,10 @@ string matricula[Max_Cursos][Max_Cursos];
 
 string NCR[Max_Cursos];
 
-int HorasEntrada[Max_Cursos];
-int HorasSalida[Max_Cursos];
+string HorasEntrada[Max_Cursos];
+string HorasSalida[Max_Cursos];
+
+
 int Creditos[Max_Cursos];
 int nivel [Estudiantes];
 int contador_estudiaes = 0;
@@ -100,8 +102,6 @@ void RegistroCursos() {
 		cin >> NCR[contador_Cursos];
 		cout << "\nenter course credits: ";
 		cin >> Creditos[contador_Cursos];
-		cout << "\nenter the classroom: ";
-		cin >> Aunla[contador_Cursos];
 		cout << "\nEnter the teacher's name: ";
 		cin >> NombreProfe[contador_Cursos];
 		cout << "\nenter the teacher's first last name: ";
@@ -137,18 +137,12 @@ void RegistroHorarios() {
 	}
 	cout << "enter the day: ";
 	cin >> dias[aux];
-	cout << "\nenter the time: ";
+	cout << "\nenter the time (example: 10:00):  ";
 	cin >> HorasEntrada[aux];
-	if (HorasEntrada[aux] > 12) {
-		cout << "that time does not exist\n";
-		return;
-	}
-	cout << "\nenter departure time: ";
+
+	cout << "\nenter departure time (example: 10:00): ";
 	cin >> HorasSalida[aux];
-	if (HorasSalida[aux] > 60) {
-		cout << "that time does not exist\n";
-		return;
-	}
+
 	cout << "\nenter the classroom: ";
 	cin >> Aunla[aux];
 	cout << endl;
@@ -216,14 +210,7 @@ void Matricular() {
 		cout << endl;
 		seleccion--;
 
-		for (int i = 0; i < contador_Cursos; i++) {
-			if (nombresCursos[seleccion] == matricula[eleccionE][i]) {
-
-				cout << "This course is already registered\n";
-				return;
-			}
 		
-		}
 		matricula[eleccionE][ContadorMatricula[eleccionE]] = nombresCursos[seleccion];
 		ContadorMatricula[eleccionE]++;
 		total[eleccionE] += costoCreditos[seleccion];
