@@ -27,12 +27,15 @@ string NCR[Max_Cursos];
 // aqui se va a guardar las horas de entrada,salida, el dia de clases y el horario
 string HorasEntrada[Max_Cursos];
 string HorasSalida[Max_Cursos];
-string horario[Max_Cursos][Max_Cursos];
 string dias[Max_Cursos];
 string diaclases[Max_Cursos][Max_Cursos];
 
 //aqui se va a guardar el nivel en formato numerico del estudiante
 int nivel[Estudiantes];
+
+//esto sirve para verificar que no hayan choque en los horarios
+int MañanaOTarde[Max_Cursos];
+int horario[Max_Cursos][Max_Cursos];
 
 // los contadores para no sobreescribir informacion
 int contador_estudiaes = 0;
@@ -130,7 +133,7 @@ void RegistroCursos() {
 }
 
 void RegistroHorarios() {
-
+	int days = 0;
 	if (contador_Cursos == 0) {
 		cout << "No hay cursos registrados\n";
 	}
@@ -148,13 +151,56 @@ void RegistroHorarios() {
 		cout << "Curso invalido\n";
 		return;
 	}
-	cout << "Ingrese el dia de la clase: ";
-	cin >> dias[aux];
-	cout << "\nIngrese la hora de entrda (Ejemplo: 10:00):  ";
-	cin >> HorasEntrada[aux];
-	cout << "\nIngrese la hora de salida: ";
-	cin >> HorasSalida[aux];
-	cout << "\nIngrese el aula donde sera la clase: ";
+
+	do
+	{
+		cout << "Ingrese el dia de la clase\n1 = Lunes\n2 = Martes\n3 = Miercoles\n4 = Jueves\n5 = Viernes\n";
+		cin >> days;
+
+		switch (days)
+		{
+		case 1:
+			dias[aux] = "Lunes";
+			break;
+		case 2:
+			dias[aux] = "Martes";
+			break;
+		case 3:
+			dias[aux] = "Miercoles";
+			break;
+		case 4:
+			dias[aux] = "Jueves";
+			break;
+		case 5:
+			dias[aux] = "Viernes";
+			break;
+		}
+	} while (days <= 0 || days >= 6);
+
+	cout << "Desea que el horario sea temprano o en la tarde\n1 = temprano (am)\n2 = tarde (pm)\n";
+	cin >> MañanaOTarde[aux];
+
+	if (MañanaOTarde[aux] <= 0 || MañanaOTarde[aux] >= 3) {
+		do
+		{
+			cout << "\nEsa opcion no es valida\nIngrese otra: ";
+			cin >> MañanaOTarde[aux];
+			cout << endl;
+		} while (MañanaOTarde[aux] <= 0 || MañanaOTarde[aux] >= 3);
+	}
+
+	switch (MañanaOTarde[aux])
+	{
+	case 1:
+		HorasEntrada[aux] = "8:00";
+		HorasSalida[aux] = "11:00";
+		break;
+	case 2:
+		HorasEntrada[aux] = "1:00";
+		HorasSalida[aux] = "4:00";
+		break;
+	}
+	cout << "En que aula se daran las clases: ";
 	cin >> Aunla[aux];
 	cout << endl;
 	cout << "Se registro la hora de entrada y salida\n";
@@ -193,7 +239,7 @@ void Matricular() {
 		cout << "No hay cursos o estudiantes registrados\n";
 		return;
 	}
-	cout << "\nEstudiantes registrados\n";
+	cout << "\nRegistro de matricula\n";
 
 	for (int i = 0; i < contador_estudiaes; i++) {
 		cout << i + 1 << " = " << Cedulas[i] << " || " << Nombres_estudiante[i] << "  " << Primer_apellido_estudiante[i] << "  " << Segundo_apellido_estudiante[i] << " || " << Carrera[i] << endl;
@@ -232,10 +278,17 @@ void Matricular() {
 				cout << "Este curso ya esta matriculado\n";
 				return;
 			}
-
+			if (dias[seleccion] == diaclases[eleccionE][i]) {
+				if (MañanaOTarde[seleccion] == horario[eleccionE][i]) {
+					cout << "Este curso choca en horario con otro\n";
+					return;
+				}
+			}
 
 		}
 		matricula[eleccionE][ContadorMatricula[eleccionE]] = nombresCursos[seleccion];
+		diaclases[eleccionE][contadorHorario[seleccion]] = dias[seleccion];
+		horario[eleccionE][contadorHorario[seleccion]] = MañanaOTarde[seleccion];
 
 		ContadorMatricula[eleccionE]++;
 		contadorHorario[seleccion]++;
