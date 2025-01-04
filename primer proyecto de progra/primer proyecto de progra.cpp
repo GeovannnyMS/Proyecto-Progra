@@ -1,37 +1,51 @@
 #include <iostream>
 using namespace std;
 
+//estos son los limites de vectores y matrices 
 #define Estudiantes 10
 #define	Max_Cursos 10
 
+//varibles pra guardar el nombre y apellidos del estudiante
 string Nombres_estudiante[Estudiantes];
 string Primer_apellido_estudiante[Estudiantes];
 string Segundo_apellido_estudiante[Estudiantes];
 
+//varibles pra guardar el nombre y apellidos del profesor
 string NombreProfe[Max_Cursos];
 string PimerApellidoProfe[Max_Cursos];
 string SegundoApellidoProfe[Max_Cursos];
 
-string dias[Max_Cursos];
+//varibles donde se van a guardar el aula, la carrera, cedulas,cursos y matricula
 string Aunla[Max_Cursos];
 string Carrera[Estudiantes];
 string Cedulas[Estudiantes];
 string nombresCursos[Max_Cursos];
 string matricula[Max_Cursos][Max_Cursos];
 
+//aqui se va a guardar los NCR del curso
 string NCR[Max_Cursos];
 
-int HorasEntrada[Max_Cursos];
-int HorasSalida[Max_Cursos];
+//aqui se van a guardar las horas de entrada y salida y el horario del estudiante
+string HorasEntrada[Max_Cursos];
+string HorasSalida[Max_Cursos];
+string horario[Max_Cursos][Max_Cursos];
+string dias[Max_Cursos];
+string diaclases[Max_Cursos][Max_Cursos];
+
+//qui se van a guardar los creditos 
 int Creditos[Max_Cursos];
+//aqui se va a guardar el nivel en formato numerico del estudiante
 int nivel [Estudiantes];
+
+// los contadores para no sobreescribir informacion
 int contador_estudiaes = 0;
 int contador_Cursos = 0;
-int contadorHorarios = 0;
+int ContadorMatricula[Max_Cursos];
+int contadorHorario[Max_Cursos];
+
+//el costo de los creditos y el total a pagar despues de la matricula
 int costoCreditos [Max_Cursos];
 int total[Max_Cursos];
-
-int ContadorMatricula[Max_Cursos];
 
 
 void RegistroEsrudiantes() {
@@ -100,8 +114,6 @@ void RegistroCursos() {
 		cin >> NCR[contador_Cursos];
 		cout << "\nenter course credits: ";
 		cin >> Creditos[contador_Cursos];
-		cout << "\nenter the classroom: ";
-		cin >> Aunla[contador_Cursos];
 		cout << "\nEnter the teacher's name: ";
 		cin >> NombreProfe[contador_Cursos];
 		cout << "\nenter the teacher's first last name: ";
@@ -125,10 +137,12 @@ void RegistroHorarios() {
 	}
 
 	int aux;
-	cout << "enter the position to which you want to add the time (1 a " << contador_Cursos << "): ";
+	cout << "enter the position to which you want to add the time (1 a " << contador_Cursos << ")\n\n";
 	for (int i = 0; i < contador_Cursos; i++) {
-		cout << NCR[i] << "|" << nombresCursos[i] << "|" << Creditos[i] << "|" << NombreProfe[i] << " " << PimerApellidoProfe[i] << " " << SegundoApellidoProfe[i] << endl;
+		cout << i +1 << " = " << NCR[i] << "|" << nombresCursos[i] << "|" << Creditos[i] << "|" << NombreProfe[i] << " " << PimerApellidoProfe[i] << " " << SegundoApellidoProfe[i] << endl;
+	
 	}
+	cout << "enter the number here: ";
 	cin >> aux;
 	aux--;
 	if (aux < 0 || aux >= contador_Cursos) {
@@ -139,16 +153,9 @@ void RegistroHorarios() {
 	cin >> dias[aux];
 	cout << "\nenter the time: ";
 	cin >> HorasEntrada[aux];
-	if (HorasEntrada[aux] > 12) {
-		cout << "that time does not exist\n";
-		return;
-	}
+
 	cout << "\nenter departure time: ";
 	cin >> HorasSalida[aux];
-	if (HorasSalida[aux] > 60) {
-		cout << "that time does not exist\n";
-		return;
-	}
 	cout << "\nenter the classroom: ";
 	cin >> Aunla[aux];
 	cout << endl;
@@ -203,6 +210,7 @@ void Matricular() {
 		return;
 	}
 	ContadorMatricula[eleccionE] = 0;
+	contadorHorario[seleccion] = 0;
 	do
 	{
 	
@@ -216,16 +224,31 @@ void Matricular() {
 		cout << endl;
 		seleccion--;
 
+		diaclases[seleccion][ContadorMatricula[eleccionE]] = dias[seleccion];
+
 		for (int i = 0; i < contador_Cursos; i++) {
 			if (nombresCursos[seleccion] == matricula[eleccionE][i]) {
 
 				cout << "This course is already registered\n";
 				return;
 			}
-		
+			if (dias[seleccion] == diaclases [eleccionE][i]) {
+				if (HorasEntrada[seleccion] == horario[eleccionE][i]) {
+					cout << "there is a schedule clash\n";
+					return;
+				}
+			}
+	
 		}
+
+		
 		matricula[eleccionE][ContadorMatricula[eleccionE]] = nombresCursos[seleccion];
+		horario[seleccion][contadorHorario[seleccion]] = HorasEntrada[seleccion];
+		diaclases[seleccion][contadorHorario[seleccion]] = dias[seleccion];
+
 		ContadorMatricula[eleccionE]++;
+		contadorHorario[seleccion]++;
+
 		total[eleccionE] += costoCreditos[seleccion];
 
 		cout << "Do you want to enroll in more courses?\n1 = Yes\n0 = No\n";
@@ -253,7 +276,7 @@ void VerEstudiantes() {
 			return;
 		}
 		for (int x = 0; x < contador_Cursos; x++) {
-			cout <<NCR[i] << " || " << Creditos[i] << " || " << matricula[i][x] << endl;
+			cout <<NCR[x] << " || " << Creditos[x] << " || " << matricula[i][x] << endl;
 		}
 		cout << "=================================================================\n";
 	}
