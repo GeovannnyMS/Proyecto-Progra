@@ -165,7 +165,7 @@ void SubmenuMatenimiento() {
 	int submenu = 0;
 	do
 	{
-		cout << "¿Que necesita?\n\n1 = Registrar estudiante\n2 = Registrar curso\n3 = Registrar curso\n4 = Atras\n";
+		cout << "Que necesita?\n\n1 = Registrar estudiante\n2 = Registrar curso\n3 = Registrar horario\n4 = Atras\n";
 		cin >> submenu;
 
 		switch (submenu)
@@ -221,7 +221,7 @@ void Matricular() {
 		for (int i = 0; i < contador_Cursos; i++) {
 			cout << "Curso " << i + 1 << " || " << NCR[i] << " || " << nombresCursos[i] << endl;
 		}
-		cout << "\n¿Qué curso quieres seleccionar?: ";
+		cout << "\nQue curso quieres seleccionar?: ";
 		cin >> seleccion;
 		cout << endl;
 		seleccion--;
@@ -323,10 +323,10 @@ int main()
 			do
 			{
 
-				cout << "¿Que desea hace?\n1 = Acerca de\n2 = Salir\n";
+				cout << "Que desea hace?\n1 = Acerca de\n2 = Salir\n";
 				cin >> submenu;
 				if (submenu == 1) {
-					cout << "\nDesarrollador del programa: Geovany Morales Sanchez (Yio)\nCedula: 604910543\nCarrera: Ingeniería de sistemas de información.\n\nYio es una persona muy vaga, le cuesta mucho tener ganas de hacer algo pero en el momento en que se encuentra con un reto apasionante su motivación se dispara hasta el cielo y no para de estudiar e intentar hasta entenderlo y poder asimilarlo. Eso hace que las acciones de Yio sean etiquetadas como plagio porque nadie ha podido notar esa capacidad de mejorar en silencio..\n";
+					cout << "\nDesarrollador del programa: Geovany Morales Sanchez (Yio)\nCedula: 604910543\nCarrera: Ingenieria de sistemas de informacion.\n\nYio es una persona muy vaga, le cuesta mucho tener ganas de hacer algo pero en el momento en que se encuentra con un reto apasionante su motivación se dispara hasta el cielo y no para de estudiar e intentar hasta entenderlo y poder asimilarlo. Eso hace que las acciones de Yio sean etiquetadas como plagio porque nadie ha podido notar esa capacidad de mejorar en silencio..\n";
 					cout << "https://github.com/GeovannnyMS/Proyecto-Progra.git.\n\n";
 				}
 
