@@ -48,6 +48,7 @@ int costoCreditos [Max_Cursos];
 int total[Max_Cursos];
 
 
+
 void RegistroEsrudiantes() {
 	int seleccion  = 0 ;
 	if (contador_estudiaes >= Estudiantes) {
