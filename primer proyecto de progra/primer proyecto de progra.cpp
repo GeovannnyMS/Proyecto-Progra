@@ -57,10 +57,6 @@ int creditosMatricula[Max_Cursos][Max_Cursos];
 int costoCreditos[Max_Cursos];
 int total[Max_Cursos];
 
-
-string consultas[Estudiantes];
-
-
 void RegistroEsrudiantes() {
 	int seleccion = 0;
 	if (contador_estudiaes >= Estudiantes) {
@@ -360,10 +356,11 @@ void VerCursos() {
 		cout << "No hay cursos registrados\n";
 		return;
 	}
-	cout << "Cursos registrados\n";
+	cout << "\nCursos registrados\n";
 	for (int i = 0; i < contador_Cursos; i++) {
 		cout << "Curso: " << nombresCursos[i] << " || NCR del curso: " << NCR[i] << " || Creditos del curso: " << Creditos[i] << endl;
-		cout << "Profesor asignado: " << NombreProfe[i] << " " << PimerApellidoProfe[i] << " " << SegundoApellidoProfe[i];
+		cout << "Profesor asignado: " << NombreProfe[i] << " " << PimerApellidoProfe[i] << " " << SegundoApellidoProfe[i] << endl << endl;
+		cout << "============================================================\n";
 	}
 }
 
