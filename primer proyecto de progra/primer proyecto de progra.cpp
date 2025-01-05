@@ -15,20 +15,29 @@ string NombreProfe[Max_Cursos];
 string PimerApellidoProfe[Max_Cursos];
 string SegundoApellidoProfe[Max_Cursos];
 
+string ProfeMatriculaN[Max_Cursos][Max_Cursos];
+string ProfeMatricula1A[Max_Cursos][Max_Cursos];
+string ProfeMatricula2Ape[Max_Cursos][Max_Cursos];
+
 //varibles donde se van a guardar el aula, la carrera, cedulas,cursos y matricula
 string Aunla[Max_Cursos];
+string salon[Max_Cursos][Max_Cursos];
 string Carrera[Estudiantes];
 string Cedulas[Estudiantes];
 string nombresCursos[Max_Cursos];
 string matricula[Max_Cursos][Max_Cursos];
+
 //aqui se va a guardar los NCR del curso
 string NCR[Max_Cursos];
-
+string ncrmatricula[Max_Cursos][Max_Cursos];
 // aqui se va a guardar las horas de entrada,salida, el dia de clases y el horario
 string HorasEntrada[Max_Cursos];
 string HorasSalida[Max_Cursos];
 string dias[Max_Cursos];
 string diaclases[Max_Cursos][Max_Cursos];
+string entrada[Max_Cursos][Max_Cursos];
+string salida[Max_Cursos][Max_Cursos];
+
 
 //aqui se va a guardar el nivel en formato numerico del estudiante
 int nivel[Estudiantes];
@@ -41,13 +50,15 @@ int horario[Max_Cursos][Max_Cursos];
 int contador_estudiaes = 0;
 int contador_Cursos = 0;
 int ContadorMatricula[Max_Cursos];
-int contadorHorario[Max_Cursos];
 
 //los creditos y el costo de los creditos y el total a pagar despues de la matricula
 int Creditos[Max_Cursos];
+int creditosMatricula[Max_Cursos][Max_Cursos];
 int costoCreditos[Max_Cursos];
 int total[Max_Cursos];
 
+
+string consultas[Estudiantes];
 
 
 void RegistroEsrudiantes() {
@@ -258,7 +269,6 @@ void Matricular() {
 		return;
 	}
 	ContadorMatricula[eleccionE] = 0;
-	contadorHorario[seleccion] = 0;
 	do
 	{
 
@@ -286,12 +296,24 @@ void Matricular() {
 			}
 
 		}
+
+		//esto se hizo asi para poder mostrarlo en el horario en consulta de estudiantes
 		matricula[eleccionE][ContadorMatricula[eleccionE]] = nombresCursos[seleccion];
-		diaclases[eleccionE][contadorHorario[seleccion]] = dias[seleccion];
-		horario[eleccionE][contadorHorario[seleccion]] = MañanaOTarde[seleccion];
+		salon[eleccionE][ContadorMatricula[eleccionE]] = Aunla[seleccion];
+		diaclases[eleccionE][ContadorMatricula[eleccionE]] = dias[seleccion];
+		ncrmatricula[eleccionE][ContadorMatricula[eleccionE]] = NCR[seleccion];
+		horario[eleccionE][ContadorMatricula[eleccionE]] = MañanaOTarde[seleccion];
+		ncrmatricula[eleccionE][ContadorMatricula[eleccionE]] = NCR[seleccion];
+		entrada[eleccionE][ContadorMatricula[eleccionE]] = HorasEntrada[seleccion];
+		salida[eleccionE][ContadorMatricula[eleccionE]] = HorasSalida[seleccion];
+		creditosMatricula[eleccionE][ContadorMatricula[eleccionE]] = Creditos[seleccion];
+		ProfeMatriculaN[eleccionE][ContadorMatricula[eleccionE]] = NombreProfe[seleccion];
+		ProfeMatricula1A[eleccionE][ContadorMatricula[eleccionE]] = PimerApellidoProfe[seleccion];
+		ProfeMatricula2Ape[eleccionE][ContadorMatricula[eleccionE]] = SegundoApellidoProfe[seleccion];
+
 
 		ContadorMatricula[eleccionE]++;
-		contadorHorario[seleccion]++;
+	
 
 		total[eleccionE] += costoCreditos[seleccion];
 
@@ -315,18 +337,23 @@ void VerEstudiantes() {
 	for (int i = 0; i < contador_estudiaes; i++) {
 		cout << Cedulas[i] << " || " << Nombres_estudiante[i] << " " << Primer_apellido_estudiante[i] << " " << Segundo_apellido_estudiante[i] << " || " << Carrera[i] << " || level: " << nivel[i] << endl;
 
-		cout << "\nCursos matriculados\n\n";
-
 		if (ContadorMatricula[i] == 0) {
 			cout << "El estudiante no ha matriculado ningun curso\n";
 			return;
 		}
-		for (int x = 0; x < contador_Cursos; x++) {
-			cout << NCR[x] << " || " << Creditos[x] << " || " << matricula[i][x] << endl;
+		cout << "\nCursos matriculados\n\n";
+
+		for (int x = 0; x < ContadorMatricula[i]; x++) {
+
+			cout << "=============================================================================\n\n";
+			cout << "Curso matriculado " << matricula[i][x] << " || NCR  del curso: " << ncrmatricula[i][x] << " || creditos del curso: " << creditosMatricula[i][x] << endl;
+			cout << "dia de la clase: " << diaclases[i][x] << " || hora de entrada: " << entrada[i][x] << " || hora de salida: "<< salida[i][x] << endl;
+			cout << "aula de clases: " << salon[i][x] << endl;
+			cout << "Profesor aignado: " << ProfeMatriculaN[i][x] << " " << ProfeMatricula1A[i][x] << " " << ProfeMatricula2Ape[i][x] << endl;
+			cout << "=============================================================================\n\n";
 		}
 		cout << "=================================================================\n";
 	}
-
 }
 void VerCursos() {
 	if (contador_Cursos == 0) {
@@ -335,7 +362,8 @@ void VerCursos() {
 	}
 	cout << "Cursos registrados\n";
 	for (int i = 0; i < contador_Cursos; i++) {
-		cout << "Curso  " << i + 1 << " || " << NCR[i] << " || " << Creditos[i] << " || " << nombresCursos[i] << endl;
+		cout << "Curso: " << nombresCursos[i] << " || NCR del curso: " << NCR[i] << " || Creditos del curso: " << Creditos[i] << endl;
+		cout << "Profesor asignado: " << NombreProfe[i] << " " << PimerApellidoProfe[i] << " " << SegundoApellidoProfe[i];
 	}
 }
 
@@ -343,7 +371,7 @@ void consulta() {
 	int menu = 0;
 	do
 	{
-		cout << "¿Que desea ver?\n1 = Ver estudiantes\n2 = Ver cursos\n3 = Atras\n";
+		cout << "Que desea ver?\n1 = Ver estudiantes\n2 = Ver cursos\n3 = Atras\n";
 		cin >> menu;
 		switch (menu)
 		{
