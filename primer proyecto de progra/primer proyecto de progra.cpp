@@ -55,7 +55,7 @@ int ContadorMatricula[Max_Cursos] = { 0 };
 int Creditos[Max_Cursos];
 int creditosMatricula[Max_Cursos][Max_Cursos];
 int costoCreditos[Max_Cursos];
-int total[Max_Cursos];
+int total[Max_Cursos] = { 0 };
 
 void RegistroEsrudiantes() {
 	int seleccion = 0;
@@ -255,7 +255,6 @@ void Matricular() {
 	cin >> eleccionE;
 	cout << endl;
 	eleccionE--;
-	total[eleccionE] = 0;
 
 	cout << "\nEl estudiante debe pagar " << total[eleccionE] << " con base a los cursos que ha matriculado\n\n";
 
