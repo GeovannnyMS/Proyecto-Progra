@@ -49,7 +49,7 @@ int horario[Max_Cursos][Max_Cursos];
 // los contadores para no sobreescribir informacion
 int contador_estudiaes = 0;
 int contador_Cursos = 0;
-int ContadorMatricula[Max_Cursos];
+int ContadorMatricula[Max_Cursos] = { 0 };
 
 //los creditos y el costo de los creditos y el total a pagar despues de la matricula
 int Creditos[Max_Cursos];
@@ -264,7 +264,7 @@ void Matricular() {
 		cout << "Estudiante invalido\n";
 		return;
 	}
-	ContadorMatricula[eleccionE] = 0;
+	
 	do
 	{
 
