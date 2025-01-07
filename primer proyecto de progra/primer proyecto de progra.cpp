@@ -318,6 +318,14 @@ void Matricular() {
 		cout << "Quieres matricular otro curso?\n1 = Si\n0 = No\n";
 		cin >> menu;
 
+		if (menu < 0 || menu >= 2) {
+			do
+			{
+				cout << "\nOpcion no valida\n Por favor elija otra: ";
+				cin >> menu;
+			} while (menu < 0 || menu >= 2);
+		}
+
 	} while (menu != 0);
 
 	
