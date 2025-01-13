@@ -127,7 +127,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="cursos.cpp" />
+    <ClCompile Include="estudiantes.cpp" />
+    <ClCompile Include="horariosClases.cpp" />
+    <ClCompile Include="matricular.cpp" />
     <ClCompile Include="primer proyecto de progra.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cursos.h" />
+    <ClInclude Include="estudiantes.h" />
+    <ClInclude Include="horariosClases.h" />
+    <ClInclude Include="matricular.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
