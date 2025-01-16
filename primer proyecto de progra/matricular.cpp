@@ -3,6 +3,7 @@
 Matricular::Matricular()
 {
 
+
 	for (int i = 0; i < Max_Cursos; i++) {
 		for (int x = 0; x < Max_Cursos; x++) {
 			ProfeMatriculaN[i][x] = "";
