@@ -48,6 +48,11 @@ void estudiantes::RegistrarEstudiantes()
 	cout << "\nElija la carrera\n";
 	cout << "1 = Ingenieria En Sistemas\n2 = Aprendisaje Del Ingles\n3 = Topografia\n4 = Administracion\nIngrese El Numero: ";
 	cin >> seleccion;
+	while (seleccion < 1 || seleccion > 4)
+	{
+		cout << "Esa carrera no esta disponible, elija otra: ";
+		cin >> seleccion;
+	}
 	switch (seleccion)
 	{
 	case 1:

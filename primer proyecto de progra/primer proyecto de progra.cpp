@@ -75,7 +75,6 @@ int main()
 				cin >> submenu;
 				if (submenu == 1) {
 					cout << "\nDesarrollador del programa: Geovany Morales Sanchez (Yio)\nCedula: 604910543\nCarrera: Ingenieria de sistemas de informacion.\n\nYio es una persona muy vaga, le cuesta mucho tener ganas de hacer algo pero en el momento en que se encuentra con un reto apasionante su motivación se dispara hasta el cielo y no para de estudiar e intentar hasta entenderlo y poder asimilarlo. Eso hace que las acciones de Yio sean etiquetadas como plagio porque nadie ha podido notar esa capacidad de mejorar en silencio..\n";
-					cout << "https://github.com/GeovannnyMS/Proyecto-Progra.git.\n\n";
 				}
 			} while (submenu != 2 || submenu < 1 || submenu >= 3);
 			break;
@@ -91,7 +90,7 @@ int main()
 			consulta();
 		}
 	} while (menu != 0);
-	cout << "Gracias por usar el sistema de matricula de la UNA\n";
+	cout << "Gracias por usar el sistema de matricula de la UNA\nLink de GitHub: ";
 	cout << "https://github.com/GeovannnyMS/Proyecto-Progra.git";
 
 }

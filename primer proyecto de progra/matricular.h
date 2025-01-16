@@ -14,7 +14,7 @@ private:
 	string entrada[Max_Cursos][Max_Cursos];
 	string salida[Max_Cursos][Max_Cursos];
 	string ncrmatricula[Max_Cursos][Max_Cursos];
-	string horario[Max_Cursos][Max_Cursos];
+	int horario[Max_Cursos][Max_Cursos];
 	int ContadorMatricula[Max_Cursos];
 	int total[Max_Cursos];
 	int creditosMatricula[Max_Cursos][Max_Cursos];

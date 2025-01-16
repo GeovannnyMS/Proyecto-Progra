@@ -14,7 +14,7 @@ Matricular::Matricular()
 			entrada[i][x] = "";
 			salida[i][x] = "";
 			ncrmatricula[i][x] = "";
-			horario[i][x] = "";
+			horario[i][x] = 0;
 			creditosMatricula[i][x] = 0;
 		}
 		total[i] = 0;
@@ -38,7 +38,7 @@ void Matricular::matricular(Cursos& curso, estudiantes& estudiante, HorariosClas
 	cout << "\nRegistro de matricula\n";
 
 	for (int i = 0; i < alumnos; i++) {
-		cout << i + 1 << " = " << estudiante.getcedula(i) << " || " << estudiante.getnombres(i) << "  " << estudiante.getapellido(i) << "  " << estudiante.getapellido2(i) << " || " << estudiante.getcarrera(i) << endl;
+		cout << "Estudiante " << i + 1 << ": " << estudiante.getcedula(i) << " || " << estudiante.getnombres(i) << "  " << estudiante.getapellido(i) << "  " << estudiante.getapellido2(i) << " || " << estudiante.getcarrera(i) << endl;
 	}
 	cout << "\nQue estudiante desea matricular cursos?: ";
 	cin >> eleccionE;
@@ -46,9 +46,8 @@ void Matricular::matricular(Cursos& curso, estudiantes& estudiante, HorariosClas
 	eleccionE--;
 
 	mañamaotarde[seleccion] = hora.getMañanaOTarde(seleccion);
-	cout << "\nEl estudiante debe pagar " << total[eleccionE] << " con base a los cursos que ha matriculado\n\n";
 
-	if (eleccionE < 0 || eleccionE >= contador) {
+	if (eleccionE < 0 || eleccionE >= alumnos) {
 		cout << "Estudiante invalido\n";
 		return;
 	}
@@ -63,7 +62,10 @@ void Matricular::matricular(Cursos& curso, estudiantes& estudiante, HorariosClas
 		cin >> seleccion;
 		cout << endl;
 		seleccion--;
-
+		if (seleccion <= 0 || seleccion >= contador) {
+			cout << "Curso invalido\n";
+			return;
+		}
 
 		for (int i = 0; i < contador; i++) {
 			if (curso.getcurso(seleccion) == matricula[eleccionE][i]) {
@@ -71,8 +73,10 @@ void Matricular::matricular(Cursos& curso, estudiantes& estudiante, HorariosClas
 				return;
 			}
 			if (hora.getdias(seleccion) == diaclases[eleccionE][i]) {
-				cout << "Este curso choca en horario con otro\n";
-				return;
+				if (hora.getMañanaOTarde(seleccion) == horario[eleccionE][i]) {
+					cout << "Este curso choca en horario con otro\n";
+					return;
+				}
 			}
 		}
 		matricula[eleccionE][ContadorMatricula[eleccionE]] = curso.getcurso(seleccion);
