@@ -55,7 +55,6 @@ void Matricular::matricular(Cursos& curso, estudiantes& estudiante, HorariosClas
 	do
 	{
 
-
 		cout << "Que curso quiere matricular\n";
 		curso.MostrarCurso();
 		cout << "\nQue curso quieres seleccionar?: ";
